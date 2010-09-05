@@ -1,0 +1,92 @@
+{% extends "master.html" %}
+
+{% block head %}
+<script type="text/javascript">
+$(document).ready(function() {
+	favs = localStorage.getObject("favorites");
+	for (f in favs) {
+		{% comment %}
+		// We add rel="external" as a hack to make jQTouch load a new page rather
+		// than attempt to find a div to display on this page.
+		{% endcomment %}
+		$('#favorites_list').append('<li class="arrow"><a rel="external" href="/html/part.'+favs[f]+'">'+favs[f]+'</a></li>');
+	}
+
+{% comment %}
+/* If we remove the 'submit' class from the button so that
+   jQTouch doesn't catch it, catching the .click below with JQuery works.
+   However, trying to catch .submit doesn't seem to work. 
+   One option is to instead use a 'normal' form submission to the server
+   via action="/some/url" method="POST", rather than a javascript URL 
+   munging trick with a redirect.
+
+   Instead, we are using onSubmit in the form to call the URL-munging 
+   redirect.
+*/
+{% endcomment %}
+
+	$('#searchbutton').click(function() {
+		var url = "/html/part."+ $('#searchquery').val();
+		window.location.replace(url);
+	});
+
+	 $('#searchform').submit(function() {
+		    var url = "/html/part."+ $('#searchquery').val();
+		    window.location.replace(url);
+	});
+
+})
+
+
+function redirectPart() {
+    var url = "/html/part."+ $('#searchquery').val().toUpperCase();
+    window.location.replace(url);
+}
+
+
+</script>
+{% endblock %}
+
+{% block body %}
+<div id="search">
+	<div class='toolbar'>
+	 <h1>mPartsRegistry</h1>
+	 <a class="button slideup" id="infoButton" href="#about">About</a>
+	</div>
+	
+	<form id="searchform" method="GET" action="/html/part." onSubmit="javascript: redirectPart();">
+		<ul class='rounded'>
+		 <li>
+		  <input type="text" name="part_name" id="searchquery" value="" placeholder="Enter a part name, eg B0034" />
+		 </li> 
+		</ul>
+		
+		<div style="padding: 0 10px 0 10px;">		  
+		  <a href="#" id="searchbutton" class="submit whiteButton">Search</a>
+		  {% comment %}
+		  <!-- dummy submit offscreen, in an attempt to catch "Enter" key
+		       for form submission ... 
+		  <input type="submit" style="position: absolute; left: -9999px"/>
+		  -->
+		  {% endcomment %}  
+		</div>
+	</form>
+	
+	<h2>Favorite parts</h2>
+	<ul id="favorites_list" class='egdetoedge'>
+	<!-- favorites get inserted here from localStorage, via Javascript -->
+	</ul>
+</div>
+
+<div id="about" class="selectable">
+	<p><strong>mPartsRegistry</strong></p>
+	<br/>
+	<p>a mobile web interface to the Registry of Standard Biological Parts.</p>
+	<br/>
+	<p>Copyright <a rel="external" href="http://openwetware.org/wiki/User:Andrew_Perry">Andrew Perry</a>, 2010.</p>
+	<p>Released under the MIT License (TODO: link to source on github).</p>
+	<br/>
+	<a href="#" class="grayButton goback">Close</a>
+</div>
+
+{% endblock %}

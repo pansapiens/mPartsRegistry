@@ -1,0 +1,87 @@
+{% extends "master.html" %}
+
+{% block head %}
+<script type="text/javascript">
+
+$(document).ready(function() {
+	if ( checkFavorite('{{ part.name }}') ) {
+	 $('#favorite').html("Remove from favorites");
+	}
+	else {
+	 $('#favorite').html("Add to favorites");
+	}
+});
+
+</script>
+{% endblock %}
+
+{% block body %}
+<div id='part' width="90%">
+	<div class='toolbar'>
+	  <h1>Part: {{ part.name }}</h1>
+	  <a class="backlink" href="/">Home</a>
+	</div>
+	
+	{% if error %}
+	  <div class="info" style="color: red; font-size: 120%;">Error: {{ error }}</div>
+	  </div> <!-- close #part div -->
+	{% else %}
+	
+	<ul class='rounded'>
+		<li><strong>Name:</strong> {{ part.name }}</li>
+		<li><strong>Description:</strong> {{ part.short_desc }}</li>
+		<li><strong>Type:</strong> {{ part.type }}</li>
+		<li><strong>Size:</strong> {{ part.size }} bp</li>
+		<li><strong>Status:</strong> {{ part.status }}</li>
+		<li><strong>Rating:</strong> {{ part.rating }}</li>
+		<li><strong>Favorite:</strong> {{ part.best_quality }}</li>
+		<li><strong>Author(s):</strong> {{ part.author }}</li>
+		<li><strong>Added on:</strong> {{ part.entered }}</li>
+		<li class="arrow">
+		  <strong><a href="#categories">Categories</a>
+		          <small class="counter">{{ part.categories|length }}</small>
+		  </strong>
+		</li>
+		<li class="arrow">
+		  <strong><a href="#sequence">DNA sequence</a>
+		          <small class="counter">{{ part.size }} bp</small>
+		  </strong>
+		</li>
+		<li class="forward"><a href="{{ part.url }}" target="_blank">Registry page</a></li>
+	</ul>
+	
+	<ul class='rounded'>
+	  <a href="#" onclick="toggleFavorite('{{ part.name }}');" id="favorite" class="grayButton">Add to favorites</a>
+	</ul>
+</div> <!-- close #part div -->
+
+<div id='categories'>
+    <div class='toolbar'><h1>Categories for {{ part.name }}</h1>
+                     <a class='back' href="#">Back</a>
+    </div>
+	{% for cat in part.categories %}
+		<ul class='edgetoedge'>
+		 <li>{{ cat }}</li>
+		</ul>
+	{% endfor %}
+</div>
+
+<div id='sequence'>
+ <div class='toolbar'><h1>DNA sequence{{ part.sequences|pluralize }} for {{ part.name }}</h1>
+                      <a class='back' href="#">Back</a>
+ </div>
+ <div class='rounded'>
+	{% for seq in part.sequences %}
+	<div style="width: 80%; font-family: fixed; font-size: 120%; padding: 20px 20px 20px 20px;">
+	  {{ seq|upper }}
+	</div>
+	{% endfor %}
+ </div>
+</div>
+<br/>
+
+<!--  TODO: subparts, features and twins -->
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,40 @@
+application: mpartsregistry
+version: production
+runtime: python
+api_version: 1
+default_expiration: "7d"
+
+handlers:
+##### static #####
+- url: /favicon.ico
+  static_files: static/img/favicon.ico
+  upload: static/img/favicon.ico
+
+- url: /css
+  static_dir: static/css
+
+- url: /themes/jqt
+  static_dir: static/themes/jqt
+  
+- url: /themes/jqt/img
+  static_dir: static/themes/jqt/img
+  
+- url: /js
+  static_dir: static/js
+  
+- url: /img
+  static_dir: static/img
+
+##### admin #####
+- url: /
+  script: main.py
+
+- url: /html/part.(.*)
+  script: main.py
+
+- url: /xml/part.(.*)
+  script: main.py
+
+- url: /json/part.(.*)
+  script: main.py
+
