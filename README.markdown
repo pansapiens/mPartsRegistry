@@ -21,11 +21,9 @@ managed and stored on the device (via HTML5 localStorage).
 
 mPartsRegistry is released under the MIT License. 
 
-<div align="center">
  <img src="http://mpartsregistry.appspot.com/img/QR_code.png" alt="QR code to http://mpartsregistry.appspot.com/#search"/>
  <br/>
  **http://mpartsregistry.appspot.com/**
-</div>
 
 Development and installation
 ----------------------------
