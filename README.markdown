@@ -42,8 +42,8 @@ you'll need a need the
 should follow the 
 <a href="http://code.google.com/appengine/docs/python/gettingstarted/uploading.html">instructions on how to upload an app</a>.
 
-Before you upload, you will need to change the "application:" name of the app in src/app.yaml 
-from "mpartsregistry" to whatever you set your application name to in the App Engine dashboard.
+Before you upload, you will need to change the *application:* name of the app in *src/app.yaml* 
+from *mpartsregistry* to whatever you set it to in the App Engine dashboard.
 
 Two convenience scripts are provided - *start-server.sh*, for starting the local development server, 
 and *update-server.sh*, which uploads the app to App Engine. These scripts need to be edited to
