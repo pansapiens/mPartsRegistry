@@ -9,7 +9,11 @@ handlers:
 - url: /favicon.ico
   static_files: static/img/favicon.ico
   upload: static/img/favicon.ico
-
+  
+- url: /icon.png
+  static_files: static/img/icon.png
+  upload: static/img/icon.png
+  
 - url: /css
   static_dir: static/css
 
