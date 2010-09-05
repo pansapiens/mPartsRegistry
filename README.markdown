@@ -20,11 +20,15 @@ mPartsRegistry provides a simple 'bookmarking' feature, where a list of favorite
 managed and stored on the device (via HTML5 localStorage).
 
 mPartsRegistry is released under the MIT License. 
+<br/>
  <img src="http://mpartsregistry.appspot.com/img/screenshot1.png" alt="mPartsRegistry screenshot, search page"/>
+<br/> 
  <img src="http://mpartsregistry.appspot.com/img/screenshot2.png" alt="mPartsRegistry screenshot, GFP part page"/>
+<br/> 
  <img src="http://mpartsregistry.appspot.com/img/QR_code.png" alt="QR code to http://mpartsregistry.appspot.com/#search"/>
- <br/>
+<br/>
  **http://mpartsregistry.appspot.com/**
+<br/>
 
 Development and installation
 ----------------------------
