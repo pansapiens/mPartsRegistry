@@ -9,18 +9,23 @@ at mobile smartphone browsers. It's built using the <a href="http://partsregistr
 <a href="http://code.google.com/appengine/">Google App Engine</a>.
 
 The goal is not to completely replicate the functionality of the Registry (at this stage
-the API would not allow that anyhow), but to provide simple interface to quickly look up 
-important data about a Biobrick(tm) part in a laboratory setting where accessing a desktop 
-computer if often less convenient.
+the API would not allow that anyhow), but to provide simple mobile-friendly interface to 
+quickly look up important data about a Biobrick(tm) part in a laboratory setting, 
+where accessing a desktop computer if often less convenient. 
+In this context, you generally know the part name (eg B0034) that is written on a tube, 
+but would like to quickly lookup some details (for instance, the size of the part in 
+base pairs).
 
 mPartsRegistry provides a simple 'bookmarking' feature, where a list of favorite parts can be
 managed and stored on the device (via HTML5 localStorage).
 
 mPartsRegistry is released under the MIT License. 
 
-<img src="http://mpartsregistry.appspot.com/img/QR_code.png" alt="QR code to http://mpartsregistry.appspot.com/#search"/>
-<br/>
-**http://mpartsregistry.appspot.com/**
+<div align="center">
+ <img src="http://mpartsregistry.appspot.com/img/QR_code.png" alt="QR code to http://mpartsregistry.appspot.com/#search"/>
+ <br/>
+ **http://mpartsregistry.appspot.com/**
+</div>
 
 Development and installation
 ----------------------------

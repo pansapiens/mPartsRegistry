@@ -113,68 +113,8 @@ class Part():
         self.categories.append(c.contents[0])
     except:
       pass
-    
-"""
-def get_part_minidom(id, apiurl="http://partsregistry.org", add_BBa=True):
-
-  # adds BBa_ if a short-form part name is provided (and add_BBa=True)
-  if add_BBa and id[0:4] != "BBa_":
-    id = "BBa_" + id
-    
-  u = "%s/xml/part.%s" % (apiurl, id)
-  xmldata = fetchurl(u)
-  dom = parseString(xmldata)
-  return dom
-"""
-
-"""
-def get_part(id, apiurl="http://partsregistry.org", add_BBa=True):
-    # adds BBa_ if a short-form part name is provided (and add_BBa=True)
-  if add_BBa and id[0:4] != "BBa_":
-    id = "BBa_" + id
-    
-  u = "%s/xml/part.%s" % (apiurl, id)
-  xmldata = fetchurl(u)
-  dom = BeautifulStoneSoup(xmldata)
-  return dom
-"""
-
-"""
-def get_element_value(part, tag):
-  return part.getElementsByTagName(tag)[0].firstChild.nodeValue
-
-def get_element(part, tag):
-  return part.getElementsByTagName(tag)[0]
-
-def get_element_values(parent, tag):
-  values = []
-  for c in parent.childNodes:
-    if c.nodeType == c.ELEMENT_NODE:
-      values.append(c.firstChild.nodeValue)
-  return values
-"""
 
 if __name__ == "__main__":
-  
-  """
-  print "Using minidom ..."
-  part = get_part_minidom("B0034")
-  
-  print "Name: ", get_element_value(part, "part_name")
-  print "Description: ", get_element_value(part, "part_short_desc")
-  print "Type: ", get_element_value(part, "part_type")
-  print "Status: ", get_element_value(part, "part_status")
-  print "Results: ", get_element_value(part, "part_results")
-  print "Rating: ", get_element_value(part, "part_rating")
-  print "URL: ", get_element_value(part, "part_url")
-  print "Date: ", get_element_value(part, "part_entered")
-  print "Author(s): ", get_element_value(part, "part_author")
-  print "Quality: ", get_element_value(part, "best_quality")
-    
-  # TODO: need to iterate over <sequences><seq_data>ACACAC</seq_data></sequences>
-  print "DNA sequence(s): ", get_element_value(get_element(part, "sequences"), "seq_data")
-  print "Categories: ", get_element_values(get_element(part, "categories"), "category")
-  """
     
   print "\nFetching I13521 ..."
   p = Part("I13521")
