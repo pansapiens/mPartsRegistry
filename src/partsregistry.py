@@ -1,6 +1,6 @@
 import urllib2
 from xml.dom.minidom import parseString
-from BeautifulSoup import BeautifulStoneSoup
+from BeautifulSoup import BeautifulStoneSoup,Tag
 
 # Python wrappers for the Registry of Standard Biological Parts API
 #
@@ -51,15 +51,12 @@ class Part():
     self.sequences = []
     self.size = None
     self.categories = []
+    self.twins = []
     self.deep_subparts = []
     self.specified_subparts = []
+    self.specified_subscars = [] # a list of dictionaries
     
-    # TODO: subparts and features
-    
-    # specified_subscars
-    ## subpart
-    ## scar
-    ## barcode
+    # TODO: features and parameters
     
     # features
     ## feature
@@ -158,11 +155,19 @@ class Part():
       self.size = len(self.sequences[0])
     except:
       pass
+    
     try:  
       for c in part.categories("category"):
         self.categories.append(c.contents[0])
     except:
       pass
+    
+    try:  
+      for t in part.twins("twin"):
+        self.twins.append(t.contents[0])
+    except:
+      pass
+    
     try:
       for subpart in part.deep_subparts("subpart"):
         p = Part()
@@ -180,26 +185,41 @@ class Part():
         self.specified_subparts.append(p)
     except:
       pass
+    
+    try:
+      for sub in part("specified_subscars"):
+        d = {}
+        for x in sub.findAll(["subpart", "scar", "barcode"]):
+          d["feature_type"] = x.name
+          for y in x.findAll():
+            d[y.name] = y.string
+          self.specified_subscars.append(d)
+        
+    except:
+      pass
 
 if __name__ == "__main__":
+  USE_NETWORK = True
     
   print "\nFetching I13521 ..."
   
-  # fetch part automatically via network
-  p = Part("I13521")
-  
-  # use XML from a local file
-  """
-  p = Part("I13521", auto_fetch=False, auto_parse=False)
-  fh = open("testing/I13521.xml", 'r')
-  p.parse_xml(fh.read())
-  fh.close()
-  """
+  if USE_NETWORK:
+    # fetch part automatically via network
+    p = Part("I13521")
+  else:
+    # use XML from a local file
+    p = Part("I13521", auto_fetch=False, auto_parse=False)
+    fh = open("testing/I13521.xml", 'r')
+    p.parse_xml(fh.read())
+    fh.close()
   
   print p.short_desc
   
   print "deep_subparts: ", [sp.name for sp in p.deep_subparts]
   print "specified_subparts", [sp.name for sp in p.specified_subparts]
+  print "specified_subscars", [sp for sp in p.specified_subscars]
+  print
+  print "twins", p.twins
   
   print "\nWalking the part DOM directly ..."
   print "Name: ", p.dom.part_name.contents[0]
