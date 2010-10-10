@@ -25,8 +25,14 @@ class Part():
   to pull down XML via the Registry API and populate the object
   with values.
   """
-  def __init__(self, name, add_BBa=True, apiurl="http://partsregistry.org"):
-    if add_BBa and name[0:4] != "BBa_":
+  def __init__(self, name=None, add_BBa=True, \
+                           auto_fetch=True, \
+                           auto_parse=True, \
+                           apiurl="http://partsregistry.org"):
+    
+    # add BBa_ if missing, but not to plasmids (pSB***)
+    # TODO: make a list of regexs that shouldn't be BBa_'ed
+    if name and add_BBa and name[0:4].lower() != "bba_" and name[0:3].lower() != "psb":
       name = "BBa_" + name
     self.name = name
     self.xml = None
@@ -45,23 +51,67 @@ class Part():
     self.sequences = []
     self.size = None
     self.categories = []
+    self.deep_subparts = []
+    self.specified_subparts = []
     
     # TODO: subparts and features
     
-    self.fetch()
+    # specified_subscars
+    ## subpart
+    ## scar
+    ## barcode
+    
+    # features
+    ## feature
+    ### id
+    ### title
+    ### type
+    ### direction
+    ### startpos
+    ### endpos
+    
+    # parameters
+    ## parameter
+    ### name
+    ### value
+    ### units
+    ### url
+    ### id
+    ### m_date
+    ### user_id
+    ### user_name
+    
+    # twins
+    ## twin
+    
+    if auto_fetch and name: self.fetch()
+    if auto_parse and name: self.parse_xml()
     
   def fetch(self):
     self.xml = fetchurl(self.url)
-    self.parse_xml()
     return self
   
-  def parse_xml(self):
+  def parse_xml(self, xmlstr=None):
+    """
+    Parse self.xml. If a string is given as an argument (xmlstr)
+    then set self.xml to that string, then parse.
+    """
+    if xmlstr:
+      self.xml = xmlstr
+      
     part = BeautifulStoneSoup(self.xml)
     self.dom = part
-    if part.part_list.error:
-      self.error = part.part_list.error
-      return False
+    try:
+      if part.part_list.error:
+        self.error = part.part_list.error
+        return False
+    except:
+      pass
     
+    try:
+      self.name = part.part_name.contents[0]
+    except:
+      pass
     try:
       self.short_desc = part.part_short_desc.contents[0]
     except:
@@ -113,13 +163,44 @@ class Part():
         self.categories.append(c.contents[0])
     except:
       pass
+    try:
+      for subpart in part.deep_subparts("subpart"):
+        p = Part()
+        p.xml = str(subpart)
+        p.parse_xml()
+        self.deep_subparts.append(p)
+    except:
+      pass
+    
+    try:
+      for subpart in part.specified_subparts("subpart"):
+        p = Part()
+        p.xml = str(subpart)
+        p.parse_xml()
+        self.specified_subparts.append(p)
+    except:
+      pass
 
 if __name__ == "__main__":
     
   print "\nFetching I13521 ..."
+  
+  # fetch part automatically via network
   p = Part("I13521")
+  
+  # use XML from a local file
+  """
+  p = Part("I13521", auto_fetch=False, auto_parse=False)
+  fh = open("testing/I13521.xml", 'r')
+  p.parse_xml(fh.read())
+  fh.close()
+  """
+  
   print p.short_desc
-
+  
+  print "deep_subparts: ", [sp.name for sp in p.deep_subparts]
+  print "specified_subparts", [sp.name for sp in p.specified_subparts]
+  
   print "\nWalking the part DOM directly ..."
   print "Name: ", p.dom.part_name.contents[0]
   print "Categories: "
