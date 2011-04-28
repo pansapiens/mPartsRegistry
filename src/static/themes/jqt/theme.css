@@ -2,6 +2,9 @@ body {
     background: #000;
     color: #ddd;
 }
+
+strong {color: white}
+
 #jqt > * {
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#5e5e65));
 }
