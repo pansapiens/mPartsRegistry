@@ -5,7 +5,7 @@ About
 -----
 <a href="http://mpartsregistry.appspot.com/">mPartsRegistry</a> is a simple interface to the <a href="http://partsregistry.org/">Registry of Standard Biological Parts</a> aimed
 at mobile smartphone browsers. It's built using the <a href="http://partsregistry.org/Registry_API">Parts Registry API</a>, 
-<a href="http://jqtouch.com/">jQTouch</a>, <a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> and 
+<a href="http://jquerymobile.com/">JQuery Mobile</a>, <a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> and 
 <a href="http://code.google.com/appengine/">Google App Engine</a>.
 
 The goal is not to completely replicate the functionality of the Registry (at this stage
@@ -20,6 +20,8 @@ mPartsRegistry provides a simple 'bookmarking' feature, where a list of favorite
 managed and stored on the device (via HTML5 localStorage).
 
 mPartsRegistry is released under the MIT License. 
+<br/>
+<h3>Old screenshots of the jQTouch interface (it looks a little different now)</h3>
 <br/>
  <img src="http://mpartsregistry.appspot.com/img/screenshot1.png" alt="mPartsRegistry screenshot, search page"/>
 <br/> 
