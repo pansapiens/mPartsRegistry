@@ -130,7 +130,8 @@ class Part():
     except:
       pass
     try:
-      self.url = "%s/xml/part.%s" % (self.apiurl, self.name)
+      #self.url = "%s/xml/part.%s" % (self.apiurl, self.name)
+      self.url = part.part_url.contents[0]
     except:
       pass
     try:

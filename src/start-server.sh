@@ -1,5 +1,5 @@
 #!/bin/sh
-GAE_PATH=/data/python_devel/appengine/google_appengine/
+GAE_PATH=/data/code/google_appengine/
 APP_PATH=$(pwd)
 ADDRESS=127.0.0.1
 DB=dev_datastore

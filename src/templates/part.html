@@ -16,69 +16,77 @@ $(document).ready(function() {
 {% endblock %}
 
 {% block body %}
-<div id='part' width="90%">
-	<div class='toolbar'>
+<div id='part' data-role="page">
+	<div data-role="header">
 	  <h1>Part: {{ part.name }}</h1>
-	  <a class="back" href="/" rel="external">Home</a>
+	  <a href="/" data-icon="home" rel="external">Home</a>
 	</div>
-	
+
 	{% if error %}
-	  <div class="info" style="color: red; font-size: 120%;">Error: {{ error }}</div>
-	  </div> <!-- close #part div -->
+	 <div class="info" data-theme="e" style="color: red; font-size: 120%;">Error: {{ error }}</div>
+	 </div> <!-- close #part div -->
 	{% else %}
 	
-	<ul class='rounded'>
-		<li><strong>Name:</strong> {{ part.name }}</li>
-		<li><strong>Description:</strong> {{ part.short_desc }}</li>
-		<li><strong>Type:</strong> {{ part.type }}</li>
-		<li><strong>Size:</strong> {{ part.size }} bp</li>
-		<li><strong>Status:</strong> {{ part.status }}</li>
-		<li><strong>Rating:</strong> {{ part.rating }}</li>
-		<li><strong>Favorite:</strong> {{ part.best_quality }}</li>
-		<li><strong>Author(s):</strong> {{ part.author }}</li>
-		<li><strong>Added on:</strong> {{ part.entered }}</li>
-		<li class="arrow">
-		  <strong><a href="#categories">Categories</a>
-		          <small class="counter">{{ part.categories|length }}</small>
-		  </strong>
+	<ul data-role="listview" data-theme="c">
+		<li><u>Name:</u> {{ part.name }}</li>
+		<li><u>Description:</u> {{ part.short_desc }}</li>
+		<li><u>Type:</u> {{ part.type }}</li>
+		<li><u>Size:</u> {{ part.size }} bp</li>
+		<li><u>Status:</u> 
+		{% ifequal part.status "Available" %}
+		  <font color="green">{{ part.status }}</font>
+		{% else %}
+		  <font color="red">{{ part.status }}</font>
+		{% endifequal %}
 		</li>
-		<li class="arrow">
-		  <strong><a href="#sequence">DNA sequence</a>
-		          <small class="counter">{{ part.size }} bp</small>
-		  </strong>
+		<li><u>Rating:</u> {{ part.rating }}</li>
+		<li><u>Favorite:</u> {{ part.best_quality }}</li>
+		<li><u>Author(s):</u> {{ part.author }}</li>
+		<li><u>Added on:</u> {{ part.entered }}</li>
+		<li>
+		  <a href="#categories">Categories
+		          <span class="ui-li-count">{{ part.categories|length }}</span>
+		  </a>
 		</li>
-		<li class="forward"><a href="{{ part.url }}" target="_blank">Registry page</a></li>
+		<li>
+		  <a href="#sequence">DNA sequence
+		    <span class="ui-li-count">{{ part.size }} bp</span>
+		  </a>
+		</li>
+		<li><a href="{{ part.url }}" rel="external" target="_blank">Registry page</a></li>
 	</ul>
 	
-	<ul class='rounded'>
-	  <a href="#" onclick="toggleFavorite('{{ part.name }}');" id="favorite" class="grayButton">Add to favorites</a>
+	<ul data-role="listview" data-theme="e">
+	  <li><a href="#" onclick="toggleFavorite('{{ part.name }}');" id="favorite">Add to favorites</a></li>
 	</ul>
 </div> <!-- close #part div -->
 
-<div id='categories'>
-    <div class='toolbar'><h1>Categories for {{ part.name }}</h1>
-                     <a class='back' href="#">Back</a>
+<div id='categories' data-role="page">
+    <div data-role="header">
+      <h1>Categories for {{ part.name }}</h1>
+      <a href="#" data-rel="back" data-icon="arrow-l" class="ui-btn-left">Back</a>
     </div>
 	{% for cat in part.categories %}
-		<ul class='edgetoedge'>
+		<ul data-role="listview">
 		 <li>{{ cat }}</li>
 		</ul>
 	{% endfor %}
 </div>
 
-<div id='sequence'>
- <div class='toolbar'><h1>DNA sequence{{ part.sequences|pluralize }} for {{ part.name }}</h1>
-                      <a class='back' href="#">Back</a>
+<div id='sequence' data-role="page">
+ <div data-role="header">
+  <h1>DNA sequence{{ part.sequences|pluralize }} for {{ part.name }}</h1>
+  <a href="#" data-rel="back" data-icon="arrow-l" class="ui-btn-left">Back</a>
  </div>
- <div class='rounded'>
+ <div>
 	{% for seq in part.sequences %}
-	<div style="width: 80%; font-family: fixed; font-size: 120%; padding: 20px 20px 20px 20px;">
+	<div style="width: 80%; font-family: courier,monospace,fixed; font-size: 120%; padding: 20px 20px 20px 20px;">
 	  {{ seq|upper }}
 	</div>
+	<hr>
 	{% endfor %}
  </div>
 </div>
-<br/>
 
 <!--  TODO: subparts, features and twins -->
 

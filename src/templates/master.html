@@ -1,11 +1,15 @@
 <html>
 <head>
 <title>mPartsRegistry</title>
-<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-<script type="text/javascript"> google.load("jquery", "1.4.2"); </script>
-<script src="/js/jqtouch.js" type="application/x-javascript" charset="utf-8"></script>
-<style type="text/css" media="screen">@import "/css/jqtouch.css";</style>
-<style type="text/css" media="screen">@import "/themes/jqt/theme.css";</style>
+{% comment %}
+<link rel="stylesheet" href="/css/jquery.mobile-1.0.1.min.css">
+<script src="/js/jquery-1.6.4.min.js"></script>
+<script src="/js/jquery.mobile-1.0.1.min.js"></script>
+{% endcomment %}
+
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
 
 <script type="text/javascript">
 
@@ -49,35 +53,13 @@ function checkFavorite(id) {
 	  return false;
 }
 
-$.jQTouch({
-    icon: 'icon.png',
-    statusBar: 'black-translucent',
-    preloadImages: [
-	  '/themes/jqt/img/back_button_clicked.png',
-	  '/themes/jqt/img/chevron_circle.png',
-	  '/themes/jqt/img/on_off.png',
-	  '/themes/jqt/img/toolbar.png',
-	  '/themes/jqt/img/back_button.png',
-	  '/themes/jqt/img/chevron.png',
-	  '/themes/jqt/img/rowhead.png',
-	  '/themes/jqt/img/whiteButton.png',
-	  '/themes/jqt/img/blueButton.png',
-	  '/themes/jqt/img/button_clicked.png',
-	  '/themes/jqt/img/grayButton.png',
-	  '/themes/jqt/img/toggleOn.png',
-	  '/themes/jqt/img/button.png',
-	  '/themes/jqt/img/loading.gif',
-	  '/themes/jqt/img/toggle.png',
-    ]
-});
-
 </script>
 
 {% block head %}{% endblock %}
 
 </head>
 
-<body class="portrait">
+<body>
 {% block body %}{% endblock %}
 </body>
 </html>

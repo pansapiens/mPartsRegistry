@@ -48,50 +48,43 @@ function redirectPart() {
 {% endblock %}
 
 {% block body %}
-<div id="search">
-	<div class='toolbar'>
+<div data-role="page" id="search">
+	<div data-role="header" data-position="inline">
 	 <h1>mPartsRegistry</h1>
-	 <a class="button slideup" id="infoButton" href="#about">About</a>
+	 <a href="#about" id="infoButton" data-icon="info" 
+	                  class="ui-btn-right" data-rel="dialog">About</a>
 	</div>
 	
-	<form id="searchform" method="GET" action="/html/part." onSubmit="javascript: redirectPart();">
-		<ul class='rounded'>
-		 <li>
-		  <input type="text" name="part_name" id="searchquery" value="" placeholder="Enter a part name, eg B0034" />
-		 </li> 
-		</ul>
-		
-		<div style="padding: 0 10px 0 10px;">		  
-		  <a href="#" id="searchbutton" class="submit whiteButton">Search</a>
-		  {% comment %}
-		  <!-- dummy submit offscreen, in an attempt to catch "Enter" key
-		       for form submission ... 
-		  <input type="submit" style="position: absolute; left: -9999px"/>
-		  -->
-		  {% endcomment %}  
-		</div>
-	</form>
+	<div style="padding:20px;">
+		<form id="searchform" method="GET" action="/html/part." onSubmit="javascript: redirectPart();">
+	        <input type="search" name="search" id="searchquery" value="" placeholder="Enter a part name, eg B0034" />
+	        <a href="#" id="searchbutton" data-role="button">Search</a>  
+		</form>
 	
-	<h2>Favorite parts</h2>
-	<ul id="favorites_list" class='egdetoedge'>
-	<!-- favorites get inserted here from localStorage, via Javascript -->
-	</ul>
-	<ul class="plastic">
-	  <li class="forward"><a href="http://partsregistry.org/" rel="external" target="_blank" style="color:#666;">Desktop Registry</a></li>
+		<h2>Favorite parts</h2>
+		<ul id="favorites_list" data-role="listview" data-theme="e">
+		 <!-- favorites get inserted here from localStorage, via Javascript -->
+		</ul>
+		<br/>
+	</div>
+	<ul data-role="listview" data-theme="c">
+	  <li><a href="http://partsregistry.org/" rel="external" target="_blank" style="color:#666;">Desktop Registry</a></li>
 	</ul>
 </div>
 
-<div id="about" class="selectable" style="padding: 20px">
-	<p><strong>mPartsRegistry</strong></p>
-	<br/>
-	<img src="/icon.png" align="right" style="padding: 20px" />
-	<br/>
-	<p>a mobile web interface to the Registry of Standard Biological Parts.</p>
-	<br/>
-	<p>Copyright <a rel="external" href="http://openwetware.org/wiki/User:Andrew_Perry" style="color: #AAA;">Andrew Perry</a>, 2010.</p>
-	<p>Released under the MIT License (<a href="http://github.com/pansapiens/mPartsRegistry" style="color: #AAA;">get the source on github</a>).</p>
-	<br/>
-	<a href="#" class="grayButton goback">Close</a>
+<div id="about" data-role="dialog">
+    <div style="padding:20px;"
+		<p><strong>mPartsRegistry</strong></p>
+		<br/>
+		<img src="/icon.png" align="right" style="padding: 20px" />
+		<br/>
+		<p>a mobile web interface to the Registry of Standard Biological Parts.</p>
+		<br/>
+		<p>Copyright <a rel="external" href="http://openwetware.org/wiki/User:Andrew_Perry" style="color: #AAA;">Andrew Perry</a>, 2010-2012</p>
+		<p>Released under the MIT License (<a href="http://github.com/pansapiens/mPartsRegistry" style="color: #AAA;">get the source on github</a>).</p>
+		<br/>
+		<a href="#" data-rel="back" data-role="button" data-icon="arrow-l">Back</a>
+	</div>
 </div>
 
 {% endblock %}
