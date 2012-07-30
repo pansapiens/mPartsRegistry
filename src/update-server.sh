@@ -1,5 +1,6 @@
 #!/bin/sh
-GAE_PATH=/data/python_devel/appengine/google_appengine/
+GAE_PATH=/data/code/google_appengine/
+
 APP_PATH=$(pwd)
 
 # update the server on App Engine

@@ -43,7 +43,6 @@ function redirectPart() {
     window.location.replace(url);
 }
 
-
 </script>
 {% endblock %}
 
@@ -59,6 +58,9 @@ function redirectPart() {
 		<form id="searchform" method="GET" action="/html/part." onSubmit="javascript: redirectPart();">
 	        <input type="search" name="search" id="searchquery" value="" placeholder="Enter a part name, eg B0034" />
 	        <a href="#" id="searchbutton" data-role="button">Search</a>  
+		</form>
+	  <form id="randomform" method="GET" action="" onSubmit=""">
+	        <a href="/html/random" id="randombutton" data-role="button">Random part</a>
 		</form>
 	
 		<h2>Favorite parts</h2>

@@ -33,6 +33,9 @@ handlers:
 - url: /
   script: main.py
 
+- url: /html/random
+  script: main.py
+  
 - url: /html/part.(.*)
   script: main.py
 

@@ -40,6 +40,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from django.utils import simplejson as json
 
 from partsregistry import *
+from part_id_list import *
 
 class Front(webapp.RequestHandler):
   def get(self):
@@ -51,6 +52,9 @@ class Front(webapp.RequestHandler):
     self.response.out.write(template.render(path, template_values))
     
 class PartPage(webapp.RequestHandler):
+  """
+  Serves up the part page for the requested part.
+  """
   def get(self, part_name):
     template_values = {}
     
@@ -64,14 +68,35 @@ class PartPage(webapp.RequestHandler):
     part = Part(part_name)
     template_values["part"] = part
     
+    renderPartPage(self, template_values)
+
+class RandomPartPage(webapp.RequestHandler):
+  """
+  Plucks a random part from the precompiled parts list and
+  shows the user it's part page.
+  """
+  def get(self):
+    template_values = {}
+    part_name = random.choice(ALL_PART_IDS)
+    part = Part(part_name)
+    template_values["part"] = part
+    
+    renderPartPage(self, template_values)
+    
+def renderPartPage(req, template_values):
+    """
+    Does some error checking then renders the part page, or an error.
+    """
+    part = template_values['part']
+    
     if part.error:
       template_values["error"] = part.error
       path = os.path.join(os.path.dirname(__file__), 'templates/part.html')
-      self.response.out.write(template.render(path, template_values))
+      req.response.out.write(template.render(path, template_values))
       return
     
     path = os.path.join(os.path.dirname(__file__), 'templates/part.html')
-    self.response.out.write(template.render(path, template_values))
+    req.response.out.write(template.render(path, template_values))
 
 class getPart(webapp.RequestHandler):
   def get(self):
@@ -80,6 +105,7 @@ class getPart(webapp.RequestHandler):
 
 def main():
   application = webapp.WSGIApplication([('/', Front),
+                                        ('/html/random', RandomPartPage),
                                         ('/html/part.(.*)', PartPage),
                                         ],
                                        debug=DEBUG_MODE)
