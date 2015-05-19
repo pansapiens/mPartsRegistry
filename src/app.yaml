@@ -1,8 +1,13 @@
-application: mpartsregistry
+application: mpartsregistry-hrd
 version: production
-runtime: python
+runtime: python27
+threadsafe: true
 api_version: 1
 default_expiration: "7d"
+
+libraries:
+- name: django
+  version: "latest"
 
 handlers:
 ##### static #####
@@ -31,17 +36,17 @@ handlers:
 
 ##### admin #####
 - url: /
-  script: main.py
+  script: main.application
 
 - url: /html/random
-  script: main.py
+  script: main.application
   
 - url: /html/part.(.*)
-  script: main.py
+  script: main.application
 
 - url: /xml/part.(.*)
-  script: main.py
+  script: main.application
 
 - url: /json/part.(.*)
-  script: main.py
+  script: main.application
 

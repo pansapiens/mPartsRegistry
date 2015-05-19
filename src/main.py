@@ -24,25 +24,22 @@ log = logging.getLogger()
 
 import os, time, random
 
-import cgi, wsgiref.handlers
-from google.appengine.ext import webapp
+import webapp2
 from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp import util
+
 # exceptions ..
 from google.appengine.runtime import DeadlineExceededError
 from google.appengine.ext.db import Timeout
-
-# for appstats
-from google.appengine.ext.webapp.util import run_wsgi_app
 
 from django.utils import simplejson as json
 
 from partsregistry import *
 from part_id_list import *
 
-class Front(webapp.RequestHandler):
+class Front(webapp2.RequestHandler):
   def get(self):
     
     template_values = {}   
@@ -51,7 +48,7 @@ class Front(webapp.RequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'templates/main.html')
     self.response.out.write(template.render(path, template_values))
     
-class PartPage(webapp.RequestHandler):
+class PartPage(webapp2.RequestHandler):
   """
   Serves up the part page for the requested part.
   """
@@ -70,7 +67,7 @@ class PartPage(webapp.RequestHandler):
     
     renderPartPage(self, template_values)
 
-class RandomPartPage(webapp.RequestHandler):
+class RandomPartPage(webapp2.RequestHandler):
   """
   Plucks a random part from the precompiled parts list and
   shows the user it's part page.
@@ -98,23 +95,13 @@ def renderPartPage(req, template_values):
     path = os.path.join(os.path.dirname(__file__), 'templates/part.html')
     req.response.out.write(template.render(path, template_values))
 
-class getPart(webapp.RequestHandler):
+class getPart(webapp2.RequestHandler):
   def get(self):
     part_name = self.request.get("part")
     self.redirect("/html/part.%s" % part_name)
 
-def main():
-  application = webapp.WSGIApplication([('/', Front),
-                                        ('/html/random', RandomPartPage),
-                                        ('/html/part.(.*)', PartPage),
-                                        ],
+application = webapp2.WSGIApplication([('/', Front),
+                                       ('/html/random', RandomPartPage),
+                                       ('/html/part.(.*)', PartPage),
+                                      ],
                                        debug=DEBUG_MODE)
-  
-  # old way, without app stats
-  #wsgiref.handlers.CGIHandler().run(application)
-  
-  # new way, so appstats can be used
-  util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-  main()
